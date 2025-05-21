@@ -2,13 +2,29 @@
 <html lang="ja">
 
 <head>
-    <title></title>
+    <title>harezora-chat</title>
 </head>
 
 <body>
+    <h1>harezora-chat V4</h1>
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
+
+        const querys = {}
+        function initQuery(){
+        let tempQuery = location.search
+        tempQuery = tempQuery.split("?")[1]
+
+        tempQuery = tempQuery.split("&")
+        for(var q of tempQuery){
+            var data = q.split("=")
+            querys[data[0]] = data[1] 
+        }
+    }
+    initQuery()
+
+
         let roomId = 0
         // Socket接続（コネクション）
         const socket = io();
@@ -16,15 +32,18 @@
 
         function joinRoom(id) {
             roomId = id
-            socket.emit("join-join", { roomId: roomId })
+            socket.emit("join-room", { roomId: roomId })
         }
-        joinRoom(114514)
+        joinRoom("aaa")
         // 待ち受け
         socket.on('test', function (msg) {
             console.log('ソケットs2c: ' + msg);
         });
         socket.on("msg", (data) => {
             console.log(data)
+        })
+        socket.on("reload",()=>{
+            location.reload()
         })
 
 

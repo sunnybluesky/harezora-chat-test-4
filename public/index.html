@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <title></title>
+</head>
+
+<body>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        let roomId = 0
+        // Socket接続（コネクション）
+        const socket = io();
+        // サーバーに送信
+
+        function joinRoom(id) {
+            roomId = id
+            socket.emit("join-join", { roomId: roomId })
+        }
+        joinRoom(114514)
+        // 待ち受け
+        socket.on('test', function (msg) {
+            console.log('ソケットs2c: ' + msg);
+        });
+        socket.on("msg", (data) => {
+            console.log(data)
+        })
+
+
+        let name = "harezora"
+        function sendMessage(msg){
+            var data = {
+                roomId:roomId,
+                name:name,
+                msg:msg,
+            }
+            socket.emit("send-room-msg",data)
+        }
+    </script>
+</body>
+
+</html>

@@ -14,6 +14,9 @@
         const querys = {}
         function initQuery(){
         let tempQuery = location.search
+        if(location.search == ""){
+            return null;
+        }
         tempQuery = tempQuery.split("?")[1]
 
         tempQuery = tempQuery.split("&")
@@ -23,6 +26,12 @@
         }
     }
     initQuery()
+    if(querys.room == undefined){
+        location.href = "/?room=main"
+    }
+    if(querys.mode == undefined){
+        querys.mode = "light"
+    }
 
 
         let roomId = 0
